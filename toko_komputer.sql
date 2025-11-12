@@ -1,0 +1,355 @@
+-- phpMyAdmin SQL Dump
+-- version 5.2.1
+-- https://www.phpmyadmin.net/
+--
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 12 Nov 2025 pada 05.21
+-- Versi server: 10.4.32-MariaDB
+-- Versi PHP: 8.0.30
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `toko_komputer`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `barang_keluar`
+--
+
+CREATE TABLE `barang_keluar` (
+  `id_keluar` varchar(20) NOT NULL,
+  `id_produk` varchar(20) NOT NULL,
+  `jumlah_keluar` int(10) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_karyawan` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `barang_masuk`
+--
+
+CREATE TABLE `barang_masuk` (
+  `id_masuk` varchar(20) NOT NULL,
+  `id_produk` varchar(20) NOT NULL,
+  `id_supplier` varchar(20) NOT NULL,
+  `jumlah_masuk` int(20) NOT NULL,
+  `tanggal` date NOT NULL,
+  `id_karyawan` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `customer`
+--
+
+CREATE TABLE `customer` (
+  `id_customer` varchar(20) NOT NULL,
+  `nama` text NOT NULL,
+  `email` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `detail_transaksi`
+--
+
+CREATE TABLE `detail_transaksi` (
+  `id_detail` varchar(20) NOT NULL,
+  `id_transaksi` varchar(20) NOT NULL,
+  `id_produk` varchar(20) NOT NULL,
+  `jumlah` int(100) NOT NULL,
+  `subtotal` bigint(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `karyawan`
+--
+
+CREATE TABLE `karyawan` (
+  `id_karyawan` varchar(20) NOT NULL,
+  `nama_karyawan` text NOT NULL,
+  `telepon` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `kategori`
+--
+
+CREATE TABLE `kategori` (
+  `id_kategori` varchar(10) NOT NULL,
+  `nama_kategori` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `kategori`
+--
+
+INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
+('1', 'CPU'),
+('2', 'MOTHERBOARD'),
+('3', 'GPU'),
+('4', 'RAM'),
+('5', 'STORAGE'),
+('6', 'PSU'),
+('7', 'CASE'),
+('8', 'FAN'),
+('9', 'PERIPHERAL');
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `produk`
+--
+
+CREATE TABLE `produk` (
+  `id_produk` varchar(20) NOT NULL,
+  `nama_produk` text NOT NULL,
+  `id_kategori` varchar(20) NOT NULL,
+  `merk` text NOT NULL,
+  `spesifikasi` varchar(100) NOT NULL,
+  `stok` int(11) NOT NULL,
+  `harga` bigint(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `produk`
+--
+
+INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesifikasi`, `stok`, `harga`) VALUES
+('CAS001', 'Aigo DarkFlash A290 White Include 3 Fan ARGB', '7', 'Aigo', '320 x 190 x 433mm, ATX / M-ATX/ ITX', 2, 384000),
+('CAS002', 'Aigo DarkFlash A290 Black Include 3 Fan ARGB', '7', 'Aigo', '320 x 190 x 433mm, ATX / M-ATX/ ITX', 2, 384000),
+('CAS003', 'Aigo DarkFlash ARC1 M-ATX Curve Case - White', '7', 'Aigo', '420 x 265 x 410mm, ATX / M-ATX/ ITX', 3, 645000),
+('CAS004', 'Aigo DarkFlash ARC1 M-ATX Curve Case - Black', '7', 'Aigo', '420 x 265 x 410mm, ATX / M-ATX/ ITX', 3, 645000),
+('CAS005', 'Digital Alliance Gaming Case N30S BTF White ', '7', 'Digital Alliance', '420 x 285 x 350mm, M-ATX/ ITX', 2, 405000),
+('CAS006', 'Digital Alliance Gaming Case N30S BTF Black', '7', 'Digital Alliance', '420 x 285 x 350mm, M-ATX/ ITX', 2, 405000),
+('CAS007', 'Digital Alliance Gaming Case AMP Black', '7', 'Digital Alliance', '440 x 205 x 352 mm,M-ATX/ ITX, LED DISPLAY', 3, 1275000),
+('CAS008', 'Digital Alliance Gaming Case AMP White', '7', 'Digital Alliance', '440 x 205 x 352 mm,M-ATX/ ITX, LED DISPLAY', 3, 1275000),
+('CAS009', 'NZXT H6 Flow RGB Matte White', '7', 'NZXT', '435 x 287 x 415mm, ATS/ M-ATX / ITX', 2, 2215000),
+('CPU001', 'Intel Core i5-12400F', '1', 'Intel', '6-Core 12-Thread, 25GHz, LGA1700', 20, 2650000),
+('CPU002', 'AMD Ryzen 5 5600', '1', 'AMD', '6-Core 12-Thread, 35GHz, AM4', 15, 2350000),
+('CPU003', 'Intel Core i7-13700K', '1', 'Intel', '16-Core 24-Thread, 34GHz, LGA1700', 10, 5950000),
+('CPU004', 'AMD Ryzen 5 8500G', '1', 'AMD', '6-Core 12-Thread, 35GHz, AM5', 4, 3400000),
+('CPU005', 'AMD Ryzen 7 5700G', '1', 'AMD', '8-Core 16-Thread, 46GHz, AM4', 5, 2725000),
+('CPU006', 'AMD Ryzen 9 7950X', '1', 'AMD', '16-Core, 32-Thread, 57GHz, AM5', 5, 8300000),
+('CPU007', 'Intel Core i9-12900K', '1', 'Intel', '16-Core, 24-Thread, 32GHz, LGA1700', 6, 4100000),
+('CPU008', 'Intel Core i7-14700K', '1', 'Intel', '20-Core, 28-Thread, 34GHz, LGA 1700', 2, 5800000),
+('FAN001', 'Aerocool Phantom M-3 ARGB Black 12CM PWM Fan', '8', 'AeroCool', '20x120x25 mm, 12v CASE, ARGB', 10, 120000),
+('FAN002', 'Aerocool Saturn 12F ARGB 3 Pcs + HUB + Remote', '8', 'AeroCool', '120x120x25mm, 12v CASE, ARGB', 12, 345000),
+('FAN003', 'Aigo DarkFlash APC1 PWM Controller', '8', 'Aigo', 'PWM CONTROLLER/ARGB REMOTE', 12, 120000),
+('FAN004', 'Aigo DarkFlash DM12 PRO ARGB 12CM PWM', '8', 'Aigo', '120x120x25mm, 12v CASE, ARGB', 8, 396000),
+('FAN005', 'DeepCool FL12R 3-IN-1 12CM Unique Addressable RGB Fan', '8', 'DeepCool', '120×120×25mm, 12v CASE, ARGB', 6, 800000),
+('FAN006', 'NZXT F120 RGB Core Triple Pack - Matte White', '8', 'NZXT', '120×120×26mm, 12v CASE, ARGB', 8, 995000),
+('FAN007', 'NZXT F120 RGB Duo Triple Pack - Matte Black', '8', 'NZXT', '120×120×26mm, 12v CASE, ARGB', 7, 1301000),
+('FAN008', 'Aerocool Mirage L360 360MM ARGB Liquid Cooler', '8', 'AeroCool', '394x120x27mm, 12v CPU, ARGB', 3, 1385000),
+('FAN009', 'Aigo DarkFlash AquaGlow DG240 Black', '8', 'Aigo', '277x120x27mm, 12v CPU, ARGB', 2, 702000),
+('FAN010', 'Aigo DarkFlash DX120 Twister V26 RGB - Black Edition', '8', 'Aigo', ' 75x75x53mm, 12v CPU, ARGB', 5, 526000),
+('FAN011', 'Aigo DarkFlash Nebula DN360D ARGB - Black Edition', '8', 'Aigo', '397x120x27mm, 12v CPU, ARGB', 1, 1061000),
+('FAN012', 'Asus ROG Ryujin III 360 ARGB Extreme Liquid Cooler', '8', 'ASUS', ' 3995x120x30 mm, 12v CPU, ARGB', 1, 6040000),
+('FAN013', 'Asus ROG STRIX LC III 360 ARGB LCD', '8', 'ASUS', '394×121×27 mm, 12v CPU, ARGB', 1, 3550000),
+('GPU001', 'Colorful iGame RTX 3060Ti Ultra OC', '3', 'iGame', '8GB GDDR6X, 256-bit, PCIe 40', 3, 6800000),
+('GPU002', 'XFX Radeon RX 6600XT', '3', 'XFX', '8GB GDDR6, 128-bit, PCI-e 40', 4, 5300000),
+('GPU003', 'Asus GeForce RTX 4060Ti ', '3', 'ASUS', '8GB GDDR6, 128-bit, PCIe 40', 6, 7550000),
+('GPU004', 'Gigabyte RTX 4060Ti WINDFORCE OC', '3', 'GIGABYTE', '8GB GDDR6, 128-bit, PCI-e 40', 2, 7000000),
+('GPU005', 'ASRock RX 7600 PHANTOM GAMING OC', '3', 'ASRock', '8GB GDDR6, 128-bit, PCI-e 40', 3, 4930000),
+('GPU006', 'POWERCOLOR RX 7700XT HELLHOUND', '3', 'POWERCOLOR', '12GB GDDR6, 192-bit, PCI-e 40', 2, 7410000),
+('GPU007', 'GIGABYTE GEFORCE RTX 5060Ti AERO OC', '3', 'GIGABYTE', '16GB GDDR7, 128-bit, PCI-e 50', 4, 9550000),
+('KEY001', 'Royal Kludge RK R75', '9', 'Royal Kludge', 'K Silver Pro Switch, 80 Tombol + Knob 75%', 2, 648999),
+('KEY002', 'Royal Kludge RK N80', '9', 'Royal Kludge', 'RK Red Switch, 80 + 1 Knob & Smart Screen', 3, 1160000),
+('KEY003', 'AULA F75', '9', 'AULA', 'Reaper Switch + 81 Tombol, Gasket mount', 4, 739000),
+('KEY004', 'AULA WIN60/WIN68', '9', 'AULA', 'Magnetic Switch, Gasket mount', 6, 779000),
+('KEY005', 'Noir Timeless82 V+B552 Classic Edition 75%', '9', 'Noir', '81 Tombol, Gasket mount, LCD Display Screen', 4, 864000),
+('MBO001', 'MSI B550M PRO-VDH MORTAR WIFI AM4', '2', 'MSI', '4x DDR4, 2x M2, USB32, SATA, WiFi, AM4', 3, 1600000),
+('MBO002', 'ASRock B550M Steel Legend AM4', '2', 'ASRock', '4x DDR4, 2x M2, USB32, SATA, AM4', 6, 2200000),
+('MBO003', 'GIGABYTE B450 AORUS Elite V2 AM4', '2', 'GIGABYTE', '4x DDR4, 2x M2, USB32, SATA, AM4', 4, 1650000),
+('MBO004', 'ASUS B650M-AYW WIFI AM5', '2', 'ASUS', '2x DDR5, 2x M2, USB 32, 4x SATA, WiFi, AM5', 3, 2130000),
+('MBO005', 'ASROCK B760M PRO RS WIFI WHITE LGA1700', '2', 'ASRock', '4x DDR5, 2x M2, USB 32, 4x SATA, WiFi, LGA1700', 2, 2580000),
+('MBO006', 'ASROCK PHANTOM GAMING Z790 NOVA WIFI LGA 1700', '2', 'ASRock', '4x DDR5, 4x M2, USB 32, 4x SATA, WiFi, LGA1700', 3, 5630000),
+('PSU001', '1STPLAYER Gaming PSU DK50 500W  80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 6, 685000),
+('PSU002', '1STPLAYER Gaming PSU DK60 600W 80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 6, 785000),
+('PSU003', 'ADATA XPG PSU Core Reactor II 850w 80+ Gold', '6', 'ADATA', '80+ Gold, FULL MODULAR, 850W, ATX', 5, 1605000),
+('PSU004', 'ADATA XPG PSU Core Reactor II 750w 80+ Gold', '6', 'ADATA', '80+ Gold, FULL MODULAR, 750W, ATX', 4, 1450000),
+('PSU005', 'ASRock Challenger CL-750G 750W 80+ Gold', '6', 'ASRock', '80+ Gold, NON MODULAR, 750W, ATX', 5, 1285000),
+('PSU006', 'Asus Prime 750W White - 80+ Gold', '6', 'ASUS', '80+ Gold, FULL MODULAR, 750W, ATX', 6, 1835000),
+('PSU007', 'Asus Prime 850W White - 80+ Gold', '6', 'ASUS', '80+ Gold, FULL MODULAR, 850W, ATX', 4, 2270000),
+('PSU008', 'Asus ROG STRIX 1000G AURA GAMING - 80+ Gold', '6', 'ASUS', '80+ Gold, FULL MODULAR, 1000W, ATX', 2, 2875000),
+('PSU009', 'Asus TUF Gaming 1000W White Edition - 80+ Gold', '6', 'ASUS', '80+ Gold, FULL MODULAR, 1000W, ATX', 3, 3150000),
+('PSU010', 'be quiet! PURE POWER 12 M 550W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 550W, ATX', 7, 1275000),
+('PSU011', 'be quiet! PURE POWER 12 M 650W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 650W, ATX', 6, 1685000),
+('PSU012', 'be quiet! PURE POWER 12 M 750W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 750W, ATX', 8, 1195000),
+('PSU013', 'be quiet! PURE POWER 12 M 850W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 850W, ATX', 5, 2150000),
+('RAM001', 'ADATA DDR4 XPG SPECTRIX D35G WHITE 32GB (2X16GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz, RGB', 4, 1570000),
+('RAM002', 'ADATA DDR4 XPG GAMMIX D35 WHITE 16GB (2X8GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz', 3, 1300000),
+('RAM003', 'COLORFUL BATTLE AX DDR4 16GB', '4', 'COLORFUL', 'DDR4, 3200MHz', 4, 600000),
+('RAM004', 'LEXAR DDR4 THOR 16GB (2X8GB)', '4', 'LEXAR', 'DDR4, 3200MHz', 6, 1100000),
+('RAM005', 'ACER PREDATOR VESTA RGB SILVER DDR4 16GB (2X8GB)', '4', 'ACER', 'DDR4, 3200-3600-4000MHz, RGB', 4, 900000),
+('RAM006', 'GSKILL DDR5 TRIDENT Z5 RGB 32GB (2X16GB)', '4', 'GSKILL', 'DDR5, 5600MHz, RGB', 2, 1540000),
+('RAM007', 'Apacer DDR5 NOX 16GB (2x8GB)', '4', 'Apacer', 'DDR5, 5600MHz', 4, 1200000),
+('RAM008', 'Crucial Pro OC Black DDR5 32GB (2x16GB)', '4', 'Crucial', 'DDR5, 5600-6000MHz', 2, 2010000),
+('RAM009', 'GSKILL DDR5 FLARE X5 32GB (2X16GB)', '4', 'GSKILL', 'DDR5, 5600MHz', 5, 2000000),
+('RAM010', 'TEAM T-CREATE EXPERT DDR5 32GB (2X16GB)', '4', 'T-CREATE', 'DDR5, 6000MHz', 3, 1500000),
+('RAM011', 'T-FORCE XTREEM PINK DDR5 32GB (2X16GB)', '4', 'T-FORCE', 'DDR5, 7600MHz', 4, 2300000),
+('STR001', 'KLEVV SSD CRAS C715 512GB M2 NVMe', '5', 'KLEVV', '512GB, R3200MB/S, NVMe PCIe Gen3x4', 6, 705000),
+('STR002', 'Paradox Gaming Ballista Advance SSD 512GB M2 NVMe', '5', 'PARADOX', '512GB, 2800MB/S, NVMe', 5, 525000),
+('STR003', 'Samsung SSD 980 M2 500GB M2 NVMe', '5', 'Samsung', '500GB, R5000MB/S, NVMe PCIe Gen3 x4', 4, 795000),
+('STR004', 'LEXAR SSD NM610 1TB M2 NVMEe', '5', 'LEXAR', '1TB, 3300MB/S, NVMe PCIe Gen3 x4', 6, 922000),
+('STR005', 'Samsung SSD 980 1TB M2 NVMe', '5', 'Samsung', '1TB, 7450MB/S, NVMe PCIe Gen3 x4', 2, 1310000),
+('STR006', 'KLEVV SSD CRAS C720 1TB M2 NVMe', '5', 'KLEVV', '1TB, 3400MB/S, NVMe PCIe Gen3 x4', 3, 1800000),
+('STR007', 'Samsung SSD 990 EVO PLUS M2 PCIe', '5', 'Samsung', '2TB, 7250MB/S, NVMe PCIe Gen3 x4', 2, 2310000);
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `supplier`
+--
+
+CREATE TABLE `supplier` (
+  `id_supplier` varchar(20) NOT NULL,
+  `alamat` text NOT NULL,
+  `email` text NOT NULL,
+  `telepon` int(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `transaksi`
+--
+
+CREATE TABLE `transaksi` (
+  `id_transaksi` varchar(20) NOT NULL,
+  `tanggal` date NOT NULL,
+  `total` int(20) NOT NULL,
+  `id_customer` varchar(20) NOT NULL,
+  `id_karyawan` varchar(20) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indeks untuk tabel `barang_keluar`
+--
+ALTER TABLE `barang_keluar`
+  ADD PRIMARY KEY (`id_keluar`),
+  ADD KEY `id_produk` (`id_produk`),
+  ADD KEY `id_karyawan` (`id_karyawan`);
+
+--
+-- Indeks untuk tabel `barang_masuk`
+--
+ALTER TABLE `barang_masuk`
+  ADD PRIMARY KEY (`id_masuk`),
+  ADD KEY `id_produk` (`id_produk`),
+  ADD KEY `id_karyawan` (`id_karyawan`),
+  ADD KEY `id_supplier` (`id_supplier`);
+
+--
+-- Indeks untuk tabel `customer`
+--
+ALTER TABLE `customer`
+  ADD PRIMARY KEY (`id_customer`);
+
+--
+-- Indeks untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD PRIMARY KEY (`id_detail`),
+  ADD KEY `id_produk` (`id_produk`),
+  ADD KEY `id_transaksi` (`id_transaksi`);
+
+--
+-- Indeks untuk tabel `karyawan`
+--
+ALTER TABLE `karyawan`
+  ADD PRIMARY KEY (`id_karyawan`);
+
+--
+-- Indeks untuk tabel `kategori`
+--
+ALTER TABLE `kategori`
+  ADD PRIMARY KEY (`id_kategori`);
+
+--
+-- Indeks untuk tabel `produk`
+--
+ALTER TABLE `produk`
+  ADD PRIMARY KEY (`id_produk`),
+  ADD KEY `id_kategori` (`id_kategori`);
+
+--
+-- Indeks untuk tabel `supplier`
+--
+ALTER TABLE `supplier`
+  ADD PRIMARY KEY (`id_supplier`);
+
+--
+-- Indeks untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD PRIMARY KEY (`id_transaksi`),
+  ADD KEY `id_customer` (`id_customer`),
+  ADD KEY `id_karyawan` (`id_karyawan`);
+
+--
+-- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+--
+
+--
+-- Ketidakleluasaan untuk tabel `barang_keluar`
+--
+ALTER TABLE `barang_keluar`
+  ADD CONSTRAINT `barang_keluar_ibfk_1` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `barang_keluar_ibfk_2` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `barang_masuk`
+--
+ALTER TABLE `barang_masuk`
+  ADD CONSTRAINT `barang_masuk_ibfk_1` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `barang_masuk_ibfk_2` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`),
+  ADD CONSTRAINT `barang_masuk_ibfk_3` FOREIGN KEY (`id_supplier`) REFERENCES `supplier` (`id_supplier`);
+
+--
+-- Ketidakleluasaan untuk tabel `detail_transaksi`
+--
+ALTER TABLE `detail_transaksi`
+  ADD CONSTRAINT `detail_transaksi_ibfk_1` FOREIGN KEY (`id_produk`) REFERENCES `produk` (`id_produk`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `detail_transaksi_ibfk_2` FOREIGN KEY (`id_transaksi`) REFERENCES `transaksi` (`id_transaksi`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `produk`
+--
+ALTER TABLE `produk`
+  ADD CONSTRAINT `produk_ibfk_1` FOREIGN KEY (`id_kategori`) REFERENCES `kategori` (`id_kategori`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Ketidakleluasaan untuk tabel `transaksi`
+--
+ALTER TABLE `transaksi`
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`) ON DELETE CASCADE ON UPDATE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
