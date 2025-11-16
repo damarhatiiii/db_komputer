@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 12 Nov 2025 pada 05.21
+-- Waktu pembuatan: 16 Nov 2025 pada 09.50
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -24,6 +24,27 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Struktur dari tabel `aktifitas`
+--
+
+CREATE TABLE `aktifitas` (
+  `id_aktifitas` int(11) NOT NULL,
+  `id_karyawan` varchar(255) NOT NULL,
+  `jenis_aktifitas` enum('barang_masuk','barang_keluar','transaksi') NOT NULL,
+  `keterangan` text NOT NULL,
+  `tanggal` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `aktifitas`
+--
+
+INSERT INTO `aktifitas` (`id_aktifitas`, `id_karyawan`, `jenis_aktifitas`, `keterangan`, `tanggal`) VALUES
+(1, '', 'transaksi', 'Melakukan transaksi penjualan dengan total Rp 1.685.000', '2025-11-16 09:45:54');
+
+-- --------------------------------------------------------
+
+--
 -- Struktur dari tabel `barang_keluar`
 --
 
@@ -34,6 +55,19 @@ CREATE TABLE `barang_keluar` (
   `tanggal` date NOT NULL,
   `id_karyawan` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `barang_keluar`
+--
+
+INSERT INTO `barang_keluar` (`id_keluar`, `id_produk`, `jumlah_keluar`, `tanggal`, `id_karyawan`) VALUES
+('BK001', 'PSU001', 3, '2025-11-16', ''),
+('BK002', 'PSU002', 1, '2025-11-16', ''),
+('BK003', 'RAM001', 1, '2025-11-16', ''),
+('BK004', 'PSU002', 1, '2025-11-16', ''),
+('BK005', 'RAM005', 1, '2025-11-16', ''),
+('BK006', 'PSU002', 1, '2025-11-16', ''),
+('BK007', 'RAM005', 1, '2025-11-16', '');
 
 -- --------------------------------------------------------
 
@@ -76,6 +110,16 @@ CREATE TABLE `detail_transaksi` (
   `subtotal` bigint(100) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `detail_transaksi`
+--
+
+INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_produk`, `jumlah`, `subtotal`) VALUES
+('DTL001', 'TRX001', 'PSU002', 1, 785000),
+('DTL002', 'TRX001', 'RAM005', 1, 900000),
+('DTL003', 'TRX002', 'PSU002', 1, 785000),
+('DTL004', 'TRX002', 'RAM005', 1, 900000);
+
 -- --------------------------------------------------------
 
 --
@@ -84,9 +128,18 @@ CREATE TABLE `detail_transaksi` (
 
 CREATE TABLE `karyawan` (
   `id_karyawan` varchar(20) NOT NULL,
-  `nama_karyawan` text NOT NULL,
-  `telepon` int(20) NOT NULL
+  `nama` varchar(100) NOT NULL,
+  `username` varchar(50) DEFAULT NULL,
+  `password` varchar(100) DEFAULT NULL,
+  `role` enum('admin','staf') NOT NULL DEFAULT 'staf'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `karyawan`
+--
+
+INSERT INTO `karyawan` (`id_karyawan`, `nama`, `username`, `password`, `role`) VALUES
+('', 'Muhamad Damar Hati', 'admin', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin');
 
 -- --------------------------------------------------------
 
@@ -135,7 +188,7 @@ CREATE TABLE `produk` (
 --
 
 INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesifikasi`, `stok`, `harga`) VALUES
-('CAS001', 'Aigo DarkFlash A290 White Include 3 Fan ARGB', '7', 'Aigo', '320 x 190 x 433mm, ATX / M-ATX/ ITX', 2, 384000),
+('CAS001', 'Aigo DarkFlash A290 White Include 3 Fan ARGB', '7', 'Aigo', '320 x 190 x 433mm, ATX / M-ATX/ ITX', 6, 384000),
 ('CAS002', 'Aigo DarkFlash A290 Black Include 3 Fan ARGB', '7', 'Aigo', '320 x 190 x 433mm, ATX / M-ATX/ ITX', 2, 384000),
 ('CAS003', 'Aigo DarkFlash ARC1 M-ATX Curve Case - White', '7', 'Aigo', '420 x 265 x 410mm, ATX / M-ATX/ ITX', 3, 645000),
 ('CAS004', 'Aigo DarkFlash ARC1 M-ATX Curve Case - Black', '7', 'Aigo', '420 x 265 x 410mm, ATX / M-ATX/ ITX', 3, 645000),
@@ -183,8 +236,8 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesif
 ('MBO004', 'ASUS B650M-AYW WIFI AM5', '2', 'ASUS', '2x DDR5, 2x M2, USB 32, 4x SATA, WiFi, AM5', 3, 2130000),
 ('MBO005', 'ASROCK B760M PRO RS WIFI WHITE LGA1700', '2', 'ASRock', '4x DDR5, 2x M2, USB 32, 4x SATA, WiFi, LGA1700', 2, 2580000),
 ('MBO006', 'ASROCK PHANTOM GAMING Z790 NOVA WIFI LGA 1700', '2', 'ASRock', '4x DDR5, 4x M2, USB 32, 4x SATA, WiFi, LGA1700', 3, 5630000),
-('PSU001', '1STPLAYER Gaming PSU DK50 500W  80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 6, 685000),
-('PSU002', '1STPLAYER Gaming PSU DK60 600W 80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 6, 785000),
+('PSU001', '1STPLAYER Gaming PSU DK50 500W  80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 3, 685000),
+('PSU002', '1STPLAYER Gaming PSU DK60 600W 80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 3, 785000),
 ('PSU003', 'ADATA XPG PSU Core Reactor II 850w 80+ Gold', '6', 'ADATA', '80+ Gold, FULL MODULAR, 850W, ATX', 5, 1605000),
 ('PSU004', 'ADATA XPG PSU Core Reactor II 750w 80+ Gold', '6', 'ADATA', '80+ Gold, FULL MODULAR, 750W, ATX', 4, 1450000),
 ('PSU005', 'ASRock Challenger CL-750G 750W 80+ Gold', '6', 'ASRock', '80+ Gold, NON MODULAR, 750W, ATX', 5, 1285000),
@@ -196,11 +249,11 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesif
 ('PSU011', 'be quiet! PURE POWER 12 M 650W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 650W, ATX', 6, 1685000),
 ('PSU012', 'be quiet! PURE POWER 12 M 750W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 750W, ATX', 8, 1195000),
 ('PSU013', 'be quiet! PURE POWER 12 M 850W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 850W, ATX', 5, 2150000),
-('RAM001', 'ADATA DDR4 XPG SPECTRIX D35G WHITE 32GB (2X16GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz, RGB', 4, 1570000),
+('RAM001', 'ADATA DDR4 XPG SPECTRIX D35G WHITE 32GB (2X16GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz, RGB', 3, 1570000),
 ('RAM002', 'ADATA DDR4 XPG GAMMIX D35 WHITE 16GB (2X8GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz', 3, 1300000),
 ('RAM003', 'COLORFUL BATTLE AX DDR4 16GB', '4', 'COLORFUL', 'DDR4, 3200MHz', 4, 600000),
 ('RAM004', 'LEXAR DDR4 THOR 16GB (2X8GB)', '4', 'LEXAR', 'DDR4, 3200MHz', 6, 1100000),
-('RAM005', 'ACER PREDATOR VESTA RGB SILVER DDR4 16GB (2X8GB)', '4', 'ACER', 'DDR4, 3200-3600-4000MHz, RGB', 4, 900000),
+('RAM005', 'ACER PREDATOR VESTA RGB SILVER DDR4 16GB (2X8GB)', '4', 'ACER', 'DDR4, 3200-3600-4000MHz, RGB', 2, 900000),
 ('RAM006', 'GSKILL DDR5 TRIDENT Z5 RGB 32GB (2X16GB)', '4', 'GSKILL', 'DDR5, 5600MHz, RGB', 2, 1540000),
 ('RAM007', 'Apacer DDR5 NOX 16GB (2x8GB)', '4', 'Apacer', 'DDR5, 5600MHz', 4, 1200000),
 ('RAM008', 'Crucial Pro OC Black DDR5 32GB (2x16GB)', '4', 'Crucial', 'DDR5, 5600-6000MHz', 2, 2010000),
@@ -238,13 +291,31 @@ CREATE TABLE `transaksi` (
   `id_transaksi` varchar(20) NOT NULL,
   `tanggal` date NOT NULL,
   `total` int(20) NOT NULL,
-  `id_customer` varchar(20) NOT NULL,
+  `id_customer` varchar(255) DEFAULT NULL,
+  `nama_pembeli` varchar(255) DEFAULT NULL,
   `id_karyawan` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
+-- Dumping data untuk tabel `transaksi`
+--
+
+INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `total`, `id_customer`, `nama_pembeli`, `id_karyawan`) VALUES
+('TRX001', '2025-11-16', 1685000, NULL, 'DENI', ''),
+('TRX002', '2025-11-16', 1685000, NULL, 'DENI', '');
+
+--
 -- Indexes for dumped tables
 --
+
+--
+-- Indeks untuk tabel `aktifitas`
+--
+ALTER TABLE `aktifitas`
+  ADD PRIMARY KEY (`id_aktifitas`),
+  ADD KEY `idx_id_karyawan` (`id_karyawan`),
+  ADD KEY `idx_tanggal` (`tanggal`),
+  ADD KEY `idx_jenis_aktifitas` (`jenis_aktifitas`);
 
 --
 -- Indeks untuk tabel `barang_keluar`
@@ -307,12 +378,28 @@ ALTER TABLE `supplier`
 --
 ALTER TABLE `transaksi`
   ADD PRIMARY KEY (`id_transaksi`),
-  ADD KEY `id_customer` (`id_customer`),
-  ADD KEY `id_karyawan` (`id_karyawan`);
+  ADD KEY `id_karyawan` (`id_karyawan`),
+  ADD KEY `transaksi_ibfk_1` (`id_customer`);
+
+--
+-- AUTO_INCREMENT untuk tabel yang dibuang
+--
+
+--
+-- AUTO_INCREMENT untuk tabel `aktifitas`
+--
+ALTER TABLE `aktifitas`
+  MODIFY `id_aktifitas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
 --
+
+--
+-- Ketidakleluasaan untuk tabel `aktifitas`
+--
+ALTER TABLE `aktifitas`
+  ADD CONSTRAINT `aktifitas_ibfk_1` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Ketidakleluasaan untuk tabel `barang_keluar`
@@ -346,7 +433,7 @@ ALTER TABLE `produk`
 -- Ketidakleluasaan untuk tabel `transaksi`
 --
 ALTER TABLE `transaksi`
-  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `transaksi_ibfk_1` FOREIGN KEY (`id_customer`) REFERENCES `customer` (`id_customer`) ON DELETE SET NULL ON UPDATE CASCADE,
   ADD CONSTRAINT `transaksi_ibfk_2` FOREIGN KEY (`id_karyawan`) REFERENCES `karyawan` (`id_karyawan`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
