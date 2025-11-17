@@ -139,7 +139,8 @@ CREATE TABLE `karyawan` (
 --
 
 INSERT INTO `karyawan` (`id_karyawan`, `nama`, `username`, `password`, `role`) VALUES
-('', 'Muhamad Damar Hati', 'admin', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin');
+('KRY001', 'Muhamad Damar Hati', 'admin', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin'),
+('KRY002', 'Ananta Bagas Sasena', 'admin', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin');
 
 -- --------------------------------------------------------
 
@@ -157,15 +158,15 @@ CREATE TABLE `kategori` (
 --
 
 INSERT INTO `kategori` (`id_kategori`, `nama_kategori`) VALUES
-('1', 'CPU'),
-('2', 'MOTHERBOARD'),
-('3', 'GPU'),
-('4', 'RAM'),
-('5', 'STORAGE'),
-('6', 'PSU'),
-('7', 'CASE'),
-('8', 'FAN'),
-('9', 'PERIPHERAL');
+('CPU001', 'CPU'),
+('MTB002', 'MOTHERBOARD'),
+('GPU003', 'GPU'),
+('RAM004', 'RAM'),
+('STR005', 'STORAGE'),
+('PSU006', 'PSU'),
+('CAS007', 'CASE'),
+('FAN008', 'FAN'),
+('PRP009', 'PERIPHERAL');
 
 -- --------------------------------------------------------
 
@@ -225,11 +226,11 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesif
 ('GPU005', 'ASRock RX 7600 PHANTOM GAMING OC', '3', 'ASRock', '8GB GDDR6, 128-bit, PCI-e 40', 3, 4930000),
 ('GPU006', 'POWERCOLOR RX 7700XT HELLHOUND', '3', 'POWERCOLOR', '12GB GDDR6, 192-bit, PCI-e 40', 2, 7410000),
 ('GPU007', 'GIGABYTE GEFORCE RTX 5060Ti AERO OC', '3', 'GIGABYTE', '16GB GDDR7, 128-bit, PCI-e 50', 4, 9550000),
-('KEY001', 'Royal Kludge RK R75', '9', 'Royal Kludge', 'K Silver Pro Switch, 80 Tombol + Knob 75%', 2, 648999),
-('KEY002', 'Royal Kludge RK N80', '9', 'Royal Kludge', 'RK Red Switch, 80 + 1 Knob & Smart Screen', 3, 1160000),
-('KEY003', 'AULA F75', '9', 'AULA', 'Reaper Switch + 81 Tombol, Gasket mount', 4, 739000),
-('KEY004', 'AULA WIN60/WIN68', '9', 'AULA', 'Magnetic Switch, Gasket mount', 6, 779000),
-('KEY005', 'Noir Timeless82 V+B552 Classic Edition 75%', '9', 'Noir', '81 Tombol, Gasket mount, LCD Display Screen', 4, 864000),
+('PRP001', 'Royal Kludge RK R75', '9', 'Royal Kludge', 'K Silver Pro Switch, 80 Tombol + Knob 75%', 2, 648999),
+('PRP002', 'Royal Kludge RK N80', '9', 'Royal Kludge', 'RK Red Switch, 80 + 1 Knob & Smart Screen', 3, 1160000),
+('PRP003', 'AULA F75', '9', 'AULA', 'Reaper Switch + 81 Tombol, Gasket mount', 4, 739000),
+('PRP004', 'AULA WIN60/WIN68', '9', 'AULA', 'Magnetic Switch, Gasket mount', 6, 779000),
+('PRP005', 'Noir Timeless82 V+B552 Classic Edition 75%', '9', 'Noir', '81 Tombol, Gasket mount, LCD Display Screen', 4, 864000),
 ('MBO001', 'MSI B550M PRO-VDH MORTAR WIFI AM4', '2', 'MSI', '4x DDR4, 2x M2, USB32, SATA, WiFi, AM4', 3, 1600000),
 ('MBO002', 'ASRock B550M Steel Legend AM4', '2', 'ASRock', '4x DDR4, 2x M2, USB32, SATA, AM4', 6, 2200000),
 ('MBO003', 'GIGABYTE B450 AORUS Elite V2 AM4', '2', 'GIGABYTE', '4x DDR4, 2x M2, USB32, SATA, AM4', 4, 1650000),
