@@ -181,7 +181,8 @@ CREATE TABLE `karyawan` (
 
 INSERT INTO `karyawan` (`id_karyawan`, `nama`, `username`, `password`, `role`) VALUES
 ('KRY001', 'Muhamad Damar Hati', 'damar', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin'),
-('KRY002', 'Ananta Bagas Sasena', 'remon', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin');
+('KRY002', 'Ananta Bagas Sasena', 'remon', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin'),
+('KRY003', 'Mohammad Ardhian Syarifudin ', 'iyan', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin');
 
 -- --------------------------------------------------------
 
