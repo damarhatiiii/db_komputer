@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Nov 2025 pada 20.56
+-- Waktu pembuatan: 28 Nov 2025 pada 23.48
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.0.30
 
@@ -48,7 +48,9 @@ INSERT INTO `aktifitas` (`id_aktifitas`, `id_karyawan`, `jenis_aktifitas`, `kete
 (6, 'KRY001', 'barang_keluar', 'Mengeluarkan barang: ACER PREDATOR VESTA RGB SILVER DDR4 16GB (2X8GB) sebanyak 1 unit - pindah gudang', '2025-11-24 09:42:43'),
 (7, 'KRY001', 'transaksi', 'Melakukan transaksi penjualan dengan total Rp 2.002.000', '2025-11-24 03:55:12'),
 (8, 'KRY001', 'barang_masuk', 'Menerima barang masuk: ACER PREDATOR VESTA RGB SILVER DDR4 16GB (2X8GB) sebanyak 6 unit', '2025-11-25 01:43:07'),
-(9, 'KRY001', 'barang_keluar', 'Mengeluarkan barang: DeepCool FL12R 3-IN-1 12CM Unique Addressable RGB Fan sebanyak 3 unit - display toko', '2025-11-25 01:47:37');
+(9, 'KRY001', 'barang_keluar', 'Mengeluarkan barang: DeepCool FL12R 3-IN-1 12CM Unique Addressable RGB Fan sebanyak 3 unit - display toko', '2025-11-25 01:47:37'),
+(10, 'KRY001', 'transaksi', 'Melakukan transaksi penjualan dengan total Rp 785.000', '2025-11-28 21:45:46'),
+(11, 'KRY001', 'barang_masuk', 'Menerima barang masuk: ADATA DDR4 XPG GAMMIX D35 WHITE 16GB (2X8GB) sebanyak 4 unit', '2025-11-29 03:48:55');
 
 -- --------------------------------------------------------
 
@@ -107,7 +109,8 @@ CREATE TABLE `barang_masuk` (
 
 INSERT INTO `barang_masuk` (`id_masuk`, `id_produk`, `id_supplier`, `jumlah_masuk`, `tanggal`, `id_karyawan`) VALUES
 ('BM001', 'RAM005', 'SUP003', 4, '2025-11-24', 'KRY001'),
-('BM002', 'RAM005', 'SUP002', 6, '2025-11-24', 'KRY001');
+('BM002', 'RAM005', 'SUP002', 6, '2025-11-24', 'KRY001'),
+('BM003', 'RAM002', 'SUP002', 4, '2025-11-28', 'KRY001');
 
 -- --------------------------------------------------------
 
@@ -118,7 +121,7 @@ INSERT INTO `barang_masuk` (`id_masuk`, `id_produk`, `id_supplier`, `jumlah_masu
 CREATE TABLE `customer` (
   `id_customer` varchar(20) NOT NULL,
   `nama` text NOT NULL,
-  `nomor_telepon` int(11) NOT NULL
+  `nomor_telepon` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -126,9 +129,9 @@ CREATE TABLE `customer` (
 --
 
 INSERT INTO `customer` (`id_customer`, `nama`, `nomor_telepon`) VALUES
-('CUS001', 'Deni Setiawan', 0),
-('CUS002', 'Yogi Aprilianto', 0),
-('CUS003', 'Achmad Nazzri', 0);
+('CUS001', 'Deni Setiawan', '0'),
+('CUS002', 'Yogi Aprilianto', '0'),
+('CUS003', 'Achmad Nazzri', '0');
 
 -- --------------------------------------------------------
 
@@ -159,7 +162,8 @@ INSERT INTO `detail_transaksi` (`id_detail`, `id_transaksi`, `id_produk`, `jumla
 ('DTL008', 'TRX004', 'FAN009', 1, 702000),
 ('DTL009', 'TRX005', 'RAM002', 1, 1300000),
 ('DTL010', 'TRX006', 'RAM002', 1, 1300000),
-('DTL011', 'TRX006', 'FAN009', 1, 702000);
+('DTL011', 'TRX006', 'FAN009', 1, 702000),
+('DTL012', 'TRX007', 'PSU002', 1, 785000);
 
 -- --------------------------------------------------------
 
@@ -171,18 +175,21 @@ CREATE TABLE `karyawan` (
   `id_karyawan` varchar(20) NOT NULL,
   `nama` varchar(100) NOT NULL,
   `username` varchar(50) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
   `password` varchar(100) DEFAULT NULL,
-  `role` enum('admin','staf') NOT NULL DEFAULT 'staf'
+  `tanggal_dibuat` datetime DEFAULT current_timestamp(),
+  `role` enum('admin','staf') NOT NULL DEFAULT 'staf',
+  `status` enum('aktif','nonaktif') DEFAULT 'aktif',
+  `foto_profil` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `karyawan`
 --
 
-INSERT INTO `karyawan` (`id_karyawan`, `nama`, `username`, `password`, `role`) VALUES
-('KRY001', 'Muhamad Damar Hati', 'damar', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin'),
-('KRY002', 'Ananta Bagas Sasena', 'remon', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin'),
-('KRY003', 'Mohammad Ardhian Syarifudin ', 'iyan', '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', 'admin');
+INSERT INTO `karyawan` (`id_karyawan`, `nama`, `username`, `email`, `password`, `tanggal_dibuat`, `role`, `status`, `foto_profil`) VALUES
+('KRY001', 'Muhamad Damar Hati', 'damar', 'damarhati123@gmail.com', 'damarhati123', '2025-11-29 03:55:20', 'admin', 'aktif', 'KRY001_1764363809.jpg'),
+('KRY002', 'Ananta Bagas Sasena', 'remon', NULL, '$2y$10$24HPranGAzz5RZ3/3K3kjuzUfNBIURQwsKJmvEM37jwS1HU9KMzkS', '2025-11-29 03:55:20', 'admin', 'aktif', NULL);
 
 -- --------------------------------------------------------
 
@@ -280,7 +287,7 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesif
 ('PRP004', 'AULA WIN60/WIN68', '9', 'AULA', 'Magnetic Switch, Gasket mount', 6, 779000),
 ('PRP005', 'Noir Timeless82 V+B552 Classic Edition 75%', '9', 'Noir', '81 Tombol, Gasket mount, LCD Display Screen', 4, 864000),
 ('PSU001', '1STPLAYER Gaming PSU DK50 500W  80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 3, 685000),
-('PSU002', '1STPLAYER Gaming PSU DK60 600W 80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 2, 785000),
+('PSU002', '1STPLAYER Gaming PSU DK60 600W 80+ Bronze', '6', '1STPLAYER', '80+ Bronze, FULL MODULAR, 500-600W, ATX', 1, 785000),
 ('PSU003', 'ADATA XPG PSU Core Reactor II 850w 80+ Gold', '6', 'ADATA', '80+ Gold, FULL MODULAR, 850W, ATX', 5, 1605000),
 ('PSU004', 'ADATA XPG PSU Core Reactor II 750w 80+ Gold', '6', 'ADATA', '80+ Gold, FULL MODULAR, 750W, ATX', 4, 1450000),
 ('PSU005', 'ASRock Challenger CL-750G 750W 80+ Gold', '6', 'ASRock', '80+ Gold, NON MODULAR, 750W, ATX', 5, 1285000),
@@ -293,7 +300,7 @@ INSERT INTO `produk` (`id_produk`, `nama_produk`, `id_kategori`, `merk`, `spesif
 ('PSU012', 'be quiet! PURE POWER 12 M 750W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 750W, ATX', 8, 1195000),
 ('PSU013', 'be quiet! PURE POWER 12 M 850W - 80+ Gold', '6', 'be quiet!', '80+ Gold, FULL MODULAR, 850W, ATX', 5, 2150000),
 ('RAM001', 'ADATA DDR4 XPG SPECTRIX D35G WHITE 32GB (2X16GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz, RGB', 3, 1570000),
-('RAM002', 'ADATA DDR4 XPG GAMMIX D35 WHITE 16GB (2X8GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz', 0, 1300000),
+('RAM002', 'ADATA DDR4 XPG GAMMIX D35 WHITE 16GB (2X8GB)', '4', 'ADATA', 'DDR4, 3200-3600MHz', 4, 1300000),
 ('RAM003', 'COLORFUL BATTLE AX DDR4 16GB', '4', 'COLORFUL', 'DDR4, 3200MHz', 4, 600000),
 ('RAM004', 'LEXAR DDR4 THOR 16GB (2X8GB)', '4', 'LEXAR', 'DDR4, 3200MHz', 6, 1100000),
 ('RAM005', 'ACER PREDATOR VESTA RGB SILVER DDR4 16GB (2X8GB)', '4', 'ACER', 'DDR4, 3200-3600-4000MHz, RGB', 10, 900000),
@@ -321,14 +328,14 @@ CREATE TABLE `supplier` (
   `id_supplier` varchar(20) NOT NULL,
   `nama` text NOT NULL,
   `alamat` text NOT NULL,
-  `telepon` varchar(20) NOT NULL
+  `nomor_telepon` varchar(20) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data untuk tabel `supplier`
 --
 
-INSERT INTO `supplier` (`id_supplier`, `nama`, `alamat`, `telepon`) VALUES
+INSERT INTO `supplier` (`id_supplier`, `nama`, `alamat`, `nomor_telepon`) VALUES
 ('SUP001', 'PT Sumber Teknologi', 'Jl. Merpati No. 12, Jakarta', '02188991234'),
 ('SUP002', 'CV Mandiri Komponen', 'Jl. Cemara Raya No. 55, Bandung', '02276543210'),
 ('SUP003', 'PT Digital Nusantara', 'Jl. Diponegoro No. 44, Surabaya', '03199112345'),
@@ -360,7 +367,8 @@ INSERT INTO `transaksi` (`id_transaksi`, `tanggal`, `total`, `id_customer`, `nam
 ('TRX003', '2025-11-24', 1685000, NULL, 'DENI', 'KRY001'),
 ('TRX004', '2025-11-24', 2002000, 'CUS001', 'Deni Setiawan', 'KRY001'),
 ('TRX005', '2025-11-24', 1300000, NULL, 'mansurrr', 'KRY001'),
-('TRX006', '2025-11-24', 2002000, 'CUS001', 'Deni Setiawan', 'KRY001');
+('TRX006', '2025-11-24', 2002000, 'CUS001', 'Deni Setiawan', 'KRY001'),
+('TRX007', '2025-11-28', 785000, 'CUS001', 'Deni Setiawan', 'KRY001');
 
 --
 -- Indexes for dumped tables
@@ -447,7 +455,7 @@ ALTER TABLE `transaksi`
 -- AUTO_INCREMENT untuk tabel `aktifitas`
 --
 ALTER TABLE `aktifitas`
-  MODIFY `id_aktifitas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id_aktifitas` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
